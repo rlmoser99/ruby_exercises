@@ -3,12 +3,10 @@ dictionary = ["below","down","go","going","horn","how","howdy","it","i","low","o
 def substrings (string, dictionary)
     matches = {}
     dictionary.each do |word|
-        if string.downcase.include?(word)
-            matches[word] = 1
-        end
+        matches[word] = string.downcase.scan(/(?=#{word})/).count if string.downcase.include?(word)
     end
-    puts matches
+    matches
 end
 
-substrings("Below low it sit", dictionary)
-# substrings("Howdy partner, sit down! How's it going?", dictionary)
+puts substrings("Below", dictionary)
+puts substrings("Howdy partner, sit down! How's it going?", dictionary)
