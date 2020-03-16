@@ -52,10 +52,31 @@ module Enumerable
         result
     end
 
-    def my_map
-
+    def my_map proc=nil
+            result = []
+            self.my_each do |item|
+                unless block_given?
+                    result << proc.call(item)
+                else
+                    result << yield(item)
+                end
+            end
+            result
     end
 
+    def my_inject initial=nil
+        initial.nil? ? result = self[0] : result = initial
+        initial.nil? ? index = 1 : index = 0
+        self[index...self.length].my_each do |item|
+            result = yield(result, item)
+        end
+        result
+    end
+
+end
+
+def multiply_els array
+    array.inject { |result, item| result * item }
 end
 
 # puts "my_each vs. each"
@@ -94,8 +115,31 @@ end
 # puts [1,2,3,4,5].count {|num| num % 2 == 0}
 # puts [1,2,3,4,5].count
 
-puts "my_map vs. map"
-# print [1,2,3,4,5].my_map { |i| i * i }
-puts ""
-print [1,2,3,4,5].map { |i| i * i }
-puts ""
+# puts "my_map vs. map"
+# print [1,2,3,4,5].my_map { |num| num * 2 }
+# puts ""
+# print [1,2,3,4,5].map { |num| num * 2 }
+# puts ""
+# puts "my_map with my_proc"
+# my_proc = Proc.new {|num| num * 3 } 
+# print [1,2,3,4,5].my_map my_proc
+# puts ""
+# puts "my_map with a block and my_proc"
+# print [1,2,3,4,5].my_map {|num| num * 4 }.my_map my_proc
+# puts ""
+
+# puts "my_inject vs. inject"
+# puts [1,2,3,4,5].my_inject { |sum, num| sum + num }
+# puts [1,2,3,4,5].inject { |sum, num| sum + num }
+# puts "initial = 2"
+# puts [1,2,3,4,5].my_inject(2) { |sum, num| sum + num }
+# puts [1,2,3,4,5].inject(2) { |sum, num| sum + num }
+# puts "multiplication"
+# puts [1,2,3,4,5].my_inject { |sum, num| sum * num }
+# puts [1,2,3,4,5].inject { |sum, num| sum * num }
+# puts "initial = 2"
+# puts [1,2,3,4,5].my_inject(2) { |sum, num| sum * num }
+# puts [1,2,3,4,5].inject(2) { |sum, num| sum * num }
+
+# puts "multiply_els"
+# puts multiply_els([2,4,5])
