@@ -1,12 +1,19 @@
-require_relative 'board.rb'
-require_relative 'player.rb'
-require_relative 'game.rb'
+class Game
 
-Game.new.start
+    def start
+        puts "Name of Player #1:"
+        player1_name = gets.chomp
+        @player_1 = Player.new(player1_name, "X")
+        puts "Name of Player #2:"
+        player2_name = gets.chomp
+        @player_2 = Player.new(player2_name, "O")
+        @board = GameBoard.new
+        @board.show
+    end
 
-# CLASS: Game Board
-    # Method: Fill in valid move turn
-        # example, for 1: board = [X, 2, 3, 4, 5, 6, 7, 8, 9]
+end
+
+
 
 # CLASS: Game
     # Method: Prompt player turn
