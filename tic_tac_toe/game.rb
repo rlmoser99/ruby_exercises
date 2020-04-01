@@ -11,28 +11,11 @@ class Game
         @board.show
     end
 
-    # def turn
-    #     puts "#{@player_1.name}, please select a free spot (1-9)"
-    #     cell = gets.chomp
-    #     if (@board.cells[cell.to_i - 1] === cell.to_i)
-    #         @board.cells[cell.to_i - 1] = @player_1.symbol
-    #     else
-    #         puts "That was an invalid turn."
-    #     end
-    #     @board.show
-    #     puts self.end?
-    # end
-
     def turn (player)
-        puts "#{player.name}, please select a free spot (1-9)"
-        cell = gets.chomp
-        if (@board.cells[cell.to_i - 1] === cell.to_i)
-            @board.cells[cell.to_i - 1] = player.symbol
-        else
-            puts "That was an invalid turn."
-        end
+        puts "#{player.name}, please enter a number (1-9) that is available"
+        cell = gets.chomp until (@board.cells[cell.to_i - 1] === cell.to_i)
+        @board.cells[cell.to_i - 1] = player.symbol
         @board.show
-        puts self.end?
     end
 
     def end?
@@ -43,21 +26,15 @@ class Game
         self.start
         until self.end?
             self.turn(@player_1)
+            break if self.end?
             self.turn(@player_2)
         end
+        puts "No winner" if self.end?
     end
 
 end
 
-
-
 # CLASS: Game
-    # Method: Prompt player turn
-        # Subtract 1 from "game board area" for board[index]
-    # Method: Check turn if valid move
-        # Input is number 1-9
-        # Input is not already "filled"
-        # Re-Prompt player turn if needed
     # Method: Check for winning sequence before prompting another player turn
         # [1,2,3]
         # [4,5,6]
