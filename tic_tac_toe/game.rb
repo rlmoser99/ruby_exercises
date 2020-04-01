@@ -2,25 +2,49 @@ class Game
 
     def start
         puts "Name of Player #1:"
-        player1_name = gets.chomp
-        @player_1 = Player.new(player1_name, "X")
+        name_1 = gets.chomp
+        @player_1 = Player.new(name_1, "X")
         puts "Name of Player #2:"
-        player2_name = gets.chomp
-        @player_2 = Player.new(player2_name, "O")
-        @board = GameBoard.new
+        name_2 = gets.chomp
+        @player_2 = Player.new(name_2, "O")
+        @board = Board.new
         @board.show
     end
 
-    def turn
-        puts "#{@player_1.name} select a free spot (1-9)"
+    # def turn
+    #     puts "#{@player_1.name}, please select a free spot (1-9)"
+    #     cell = gets.chomp
+    #     if (@board.cells[cell.to_i - 1] === cell.to_i)
+    #         @board.cells[cell.to_i - 1] = @player_1.symbol
+    #     else
+    #         puts "That was an invalid turn."
+    #     end
+    #     @board.show
+    #     puts self.end?
+    # end
+
+    def turn (player)
+        puts "#{player.name}, please select a free spot (1-9)"
         cell = gets.chomp
-        @board.cells[cell.to_i - 1] = @player_1.symbol
+        if (@board.cells[cell.to_i - 1] === cell.to_i)
+            @board.cells[cell.to_i - 1] = player.symbol
+        else
+            puts "That was an invalid turn."
+        end
         @board.show
+        puts self.end?
+    end
+
+    def end?
+        @board.cells.all?{ | cell | cell == "X" || cell == "O"}
     end
 
     def play
         self.start
-        self.turn
+        until self.end?
+            self.turn(@player_1)
+            self.turn(@player_2)
+        end
     end
 
 end
