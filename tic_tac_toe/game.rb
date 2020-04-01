@@ -12,7 +12,7 @@ class Game
     end
 
     def turn (player)
-        puts "#{player.name}, please enter a number (1-9) that is available"
+        puts "#{player.name}, please enter a number (1-9) that is available to place an '#{player.symbol}'"
         cell = gets.chomp until (@board.cells[cell.to_i - 1] === cell.to_i)
         @board.cells[cell.to_i - 1] = player.symbol
         @board.show
@@ -22,30 +22,28 @@ class Game
         @board.cells.all?{ | cell | cell == "X" || cell == "O"}
     end
 
-    def winner
-        result = []
+    def winner (player)
+        three_in_a_row = false
+        winning_symbol = player.symbol
         winning_combinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
         ]
         winning_combinations.each do | combination |
-            result << "1" if combination.all? {| cell | @board.cells[cell] == "X"}
-            result << "2"  if combination.all? {| cell | @board.cells[cell] == "O"}
+            three_in_a_row = true if combination.all? {| cell | @board.cells[cell] == player.symbol}   
         end
-        result
+        puts "#{player.name} is the winner"
+        three_in_a_row
     end
 
     def play
         self.start
         until self.end?
             self.turn(@player_1)
-            break if self.winner == ["1"]
-            break if self.end?
+            break if self.end? || self.winner(@player_1)
             self.turn(@player_2)
-            break if self.winner == ["2"]
+            break if self.winner(@player_2)
         end
-        puts "No winner" if self.end?
-        puts "#{@player_1.name} is the winner" if self.winner == ["1"]
-        puts "#{@player_2.name} is the winner" if self.winner == ["2"]
+        puts "No winner" if self.end? && !self.winner
     end
 
 end
