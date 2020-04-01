@@ -5,7 +5,3 @@ class Player
         @symbol = symbol
     end
 end
-
-# CLASS: Player
-    # Instance Variable: name
-    # Instance Variable: symbol ("X" or "O")
