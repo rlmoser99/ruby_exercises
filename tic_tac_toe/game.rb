@@ -11,6 +11,18 @@ class Game
         @board.show
     end
 
+    def turn
+        puts "#{@player_1.name} select a free spot (1-9)"
+        cell = gets.chomp
+        @board.cells[cell.to_i - 1] = @player_1.symbol
+        @board.show
+    end
+
+    def play
+        self.start
+        self.turn
+    end
+
 end
 
 

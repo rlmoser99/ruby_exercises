@@ -1,16 +1,16 @@
 class GameBoard
-    attr_accessor :board
+    attr_accessor :cells
     def initialize
-        @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        @cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     end
 
     def show
         puts ""
-        puts " #{board[0]} | #{board[1]} | #{board[2]}"
+        puts " #{cells[0]} | #{cells[1]} | #{cells[2]}"
         puts "---+---+---"
-        puts " #{board[3]} | #{board[4]} | #{board[5]}"
+        puts " #{cells[3]} | #{cells[4]} | #{cells[5]}"
         puts "---+---+---"
-        puts " #{board[6]} | #{board[7]} | #{board[8]}"
+        puts " #{cells[6]} | #{cells[7]} | #{cells[8]}"
         puts ""
     end
 
@@ -20,12 +20,12 @@ end
 
 # CLASS: Game Board
     # Method: Set-Up 9 Game Board Areas
-        # Instance Variable: board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        # Instance Variable: cells = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     # Method: Display Game Board
-        # board[0] | board[1] | board[2]
+        # cells[0] | cells[1] | cells[2]
         # ---+---+---
-        # board[3] | board[4] | board[5]
+        # cells[3] | cells[4] | cells[5]
         # ---+---+---
-        # board[6] | board[7] | board[8]
+        # cells[6] | cells[7] | cells[8]
     # Method: Fill in valid move turn
-        # example, for 1: board = [X, 2, 3, 4, 5, 6, 7, 8, 9]
+        # example, for 1: cells = [X, 2, 3, 4, 5, 6, 7, 8, 9]

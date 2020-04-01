@@ -2,7 +2,7 @@ require_relative 'board.rb'
 require_relative 'player.rb'
 require_relative 'game.rb'
 
-Game.new.start
+Game.new.play
 
 # CLASS: Game Board
     # Method: Fill in valid move turn
