@@ -1,12 +1,17 @@
 class Game
 
     def start
-        puts "Name of Player #1:"
+        puts "Let's play Tic-Tac-Toe!!!"
+        puts "What is the name of player #1:"
         name_1 = gets.chomp
-        @player_1 = Player.new(name_1, "X")
-        puts "Name of Player #2:"
+        puts "What 1 letter/character would you like to be your game marker?"
+        symbol_1 = gets.chomp until symbol_1.to_s.length == 1
+        @player_1 = Player.new(name_1, symbol_1)
+        puts "What is the name of player #2:"
         name_2 = gets.chomp
-        @player_2 = Player.new(name_2, "O")
+        puts "What 1 letter/character (except '#{symbol_1}') would you like to be your game marker?"
+        symbol_2 = gets.chomp until symbol_2.to_s != symbol_1.to_s && !symbol_2.nil?
+        @player_2 = Player.new(name_2, symbol_2)
         @board = Board.new
         @board.show
     end
@@ -24,14 +29,13 @@ class Game
 
     def winner (player)
         three_in_a_row = false
-        winning_symbol = player.symbol
         winning_combinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
         ]
         winning_combinations.each do | combination |
             three_in_a_row = true if combination.all? {| cell | @board.cells[cell] == player.symbol}   
         end
-        puts "#{player.name} is the winner"
+        puts "GAME OVER! #{player.name} is the winner!" if three_in_a_row
         three_in_a_row
     end
 
@@ -43,10 +47,12 @@ class Game
             self.turn(@player_2)
             break if self.winner(@player_2)
         end
-        puts "No winner" if self.end? && !self.winner
+        puts "It's a draw." if self.end? && !self.winner(@player_1) && !self.winner(@player_2)
+        puts ""
+        puts "Would you like to play a new game? Press 'y' for yes or 'n' for no."
+        repeat_game = gets.chomp.downcase
+        Game.new.play if repeat_game == "y"
+        puts "Ok. Have a great day, #{@player_1.name} and #{@player_2.name}!" if repeat_game == "n"
     end
 
 end
-
-# CLASS: Game
-    # Method: Ask to Play Again?
