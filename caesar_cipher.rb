@@ -1,20 +1,27 @@
+# frozen_string_literal: true
+
 def caesar_cipher(message, shift)
-    result = ""
-    message.each_char do |char|
-        # Modifies Uppercase
-        if char.ord >= 65 && char.ord <= 90
-            rotation = (((char.ord - 65) + shift) % 26) + 65
-            result += rotation.chr
-        # Modifies Lowercase
-        elsif char.ord >= 97 && char.ord <= 122
-            rotation = (((char.ord - 97) + shift) % 26) + 97
-            result += rotation.chr
-        # Keeps spaces & punctuation
-        else
-            result += char
-        end
+  result = ''
+  message.each_char do |char|
+    # Modifies Uppercase
+    if char.ord >= 65 && char.ord <= 90
+      rotation = (((char.ord - 65) + shift) % 26) + 65
+      result += rotation.chr
+    # Modifies Lowercase
+    elsif char.ord >= 97 && char.ord <= 122
+      rotation = (((char.ord - 97) + shift) % 26) + 97
+      result += rotation.chr
+    # Keeps spaces & punctuation
+    else
+      result += char
     end
-    puts result
+  end
+  puts result
 end
 
-caesar_cipher("What a string!", 5)
+caesar_cipher('What a string!', 5)
+
+# I don't think this will work with negative numbers, try:
+# shift = shift % 26
+# rotation = (((char.ord - 65) + (shift + 26)) % 26) + 65
+# rotation = (((char.ord - 97) + (shift + 26)) % 26) + 97
