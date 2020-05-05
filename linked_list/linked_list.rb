@@ -15,7 +15,25 @@ class LinkedList
     @head.nil? ? @head = node : @tail.next_node = node
     @tail = node
     @size += 1
-    # puts "#{node.value} was added. (head: #{head.value} tail: #{tail.value})"
+    # puts "#{node.value} was appended. (head: #{head.value} tail: #{tail.value})"
+  end
+
+  def prepend(node)
+    node = Node.new(node)
+    node.next_node = @head
+    @head = node
+    @size += 1
+    puts "#{node.value} was prepended. (head: #{head.value} tail: #{tail.value})"
+  end
+
+  def at(index)
+    return 'Invalid index' if index.is_a?(String) || index > size - 1
+
+    node = head
+    index.times do
+      node = node.next_node
+    end
+    node.value
   end
 
   def to_s
@@ -32,18 +50,19 @@ class LinkedList
 end
 
 names = LinkedList.new
+puts names.at(0)
 names.append('abby')
 names.append('becky')
 names.append('carl')
 names.append('denise')
-puts "Number of nodes #{names.size}"
 puts "The first node is #{names.head}"
 puts "The last node is #{names.tail}"
 puts names.to_s
-
-# prepend(value) adds a new node containing value to the start of the list
-
-# at(index) returns the node at the given index
+names.prepend('ethan')
+puts names.to_s
+puts "Number of nodes #{names.size}"
+puts names.at(5)
+puts names.at('ethan')
 
 # pop removes the last element from the list
 
