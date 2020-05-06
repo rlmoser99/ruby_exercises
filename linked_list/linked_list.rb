@@ -70,35 +70,77 @@ class LinkedList
     end
     string += 'nil'
   end
+
+  def insert_at(value, index)
+    return 'nil' if index < 0 || index > size
+
+    if index == 0
+      prepend(value)
+    else
+      node = Node.new(value, at(index))
+      at(index - 1).next_node = node
+      @size += 1
+    end
+  end
+
+  def remove_at(index)
+    return nil unless index.between?(0, size - 1)
+
+    if index == 0
+      @head = head.next_node
+      @size -= 1
+    elsif index == size - 1
+      pop
+    else
+      at(index - 1).next_node = at(index).next_node
+      @size -= 1
+    end
+  end
 end
 
 names = LinkedList.new
-puts names.at(0)
 names.append('abby')
 names.append('becky')
 names.append('carl')
 names.append('denise')
-puts "The first node is #{names.head.value}"
-puts "The last node is #{names.tail.value}"
 puts names.to_s
+puts ''
+puts "The head's value is #{names.head.value}"
+puts names.head
+puts "The tails value is #{names.tail.value}"
+puts names.tail
+puts ''
 names.prepend('ethan')
 puts names.to_s
+puts ''
 puts "Number of nodes #{names.size}"
+puts ''
+puts names.at(2).value
 puts names.at(2)
+puts ''
 puts names.at(5)
 puts names.at('ethan')
 names.pop
 puts names.to_s
-puts "The first node is #{names.head.value}"
-puts "The last node is #{names.tail.value}"
-puts "Number of nodes #{names.size}"
+puts ''
 puts names.contains?('carl')
 puts names.contains?('sara')
 puts names.find('carl')
 puts names.find('sara')
-
-# Extra Credit
-
-# insert_at(value, index) that inserts the node with the provided value at the given index
-
-# remove_at(index) that removes the node at the given index. (You will need to update the links of your nodes in the list when you remove a node.) </div>
+puts names.to_s
+puts ''
+names.insert_at('ben', 1)
+names.insert_at('dave', 4)
+names.insert_at('adam', 0)
+puts names.to_s
+puts ''
+puts "The first node is #{names.head.value}"
+puts "The last node is #{names.tail.value}"
+puts "Number of nodes #{names.size}"
+names.remove_at(6)
+names.remove_at(0)
+puts ''
+puts names.to_s
+puts "The first node is #{names.head.value}"
+puts "The last node is #{names.tail.value}"
+puts "Number of nodes #{names.size}"
