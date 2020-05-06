@@ -13,3 +13,6 @@ enumerable_methods
 ## Recursion
 fibonacci\
 merge_sort
+
+## Computer Science
+linked_list
