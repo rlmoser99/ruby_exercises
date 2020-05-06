@@ -3,11 +3,32 @@
 require_relative 'node.rb'
 require_relative 'tree.rb'
 
-test_array = [3, 2, 5, 4, 7, 6]
-puts "Array: #{test_array}"
-tree = Tree.new(test_array)
+puts '1. Create a binary search tree from an array of random numbers'
+# random_array = Array.new(15) { rand(1..100) }
+# puts "Random Array: #{random_array}"
+# tree = Tree.new(random_array)
+example_array = [44, 66, 27, 16, 63, 36, 20, 91, 61, 91, 19, 59, 13, 7, 24]
+puts "Array: #{example_array}"
+tree = Tree.new(example_array)
+puts ''
+puts '2. Confirm that the tree is balanced by calling `#balanced?`'
+puts tree.balanced?
+puts ''
+tree.insert(60)
+tree.insert(24)
+tree.insert(79)
+tree.insert(70)
+puts '-----------------------------'
+puts 'Print each node. List their left & right nodes, unless nil'
 tree_print = tree.print_all
 tree_print.each { |node| puts node.to_s }
+
+# 3. Print out all elements in level, pre, post, and in order
+# 4. try to unbalance the tree by adding several numbers > 100
+# 5. Confirm that the tree is unbalanced by calling `#balanced?`
+# 6. Balance the tree by calling `#rebalance!`
+# 7. Confirm that the tree is balanced by calling `#balanced?`
+# 8. Print out all elements in level, pre, post, and in order
 
 # As a bonus in Node class, try including the Comparable module and make nodes compare using their data attribute.
 
@@ -18,10 +39,6 @@ tree_print.each { |node| puts node.to_s }
 # Write a #level_order method which accepts a block. The method should traverse the tree in breadth-first level order and yield each node to the provided block. This method can be implemented using either iteration or recursion (try implementing both!). As a bonus, make the method return an array of values if no block is given. Tip: You will want to use an array acting as a queue to keep track of all the child nodes that you have yet to traverse and to add new ones to the list (as you saw in the video).
 
 # Write #inorder, #preorder, and #postorder methods which accept a block. Each method should traverse the tree in their respective depth-first order and yield each node to the provided block. As a bonus, make the method return an array of values if no block is given.
-
-# Write a #depth method which accepts a node and returns the depth(number of levels) beneath the node.
-
-# Write a #balanced? method which checks if the tree is balanced. A balanced tree is one where the difference between heights of left subtree and right subtree is not more than 1.
 
 # Write a #rebalance! method which rebalances an unbalanced tree. Tip: You’ll want to create a level-order array of the tree before passing the array back into the #build_tree method.
 
