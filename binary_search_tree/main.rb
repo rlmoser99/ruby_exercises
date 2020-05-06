@@ -18,6 +18,16 @@ tree.insert(60)
 tree.insert(24)
 tree.insert(79)
 tree.insert(70)
+puts 'Find a number:'
+puts tree.find(20)
+puts 'Find a number that does not exist:'
+puts tree.find(30).nil?
+puts 'Delete 59:'
+tree.delete(59)
+# puts 'Delete 16:'
+# tree.delete(16)
+# puts 'Delete 17:'
+# tree.delete(17)
 puts '-----------------------------'
 puts 'Print each node. List their left & right nodes, unless nil'
 tree_print = tree.print_all

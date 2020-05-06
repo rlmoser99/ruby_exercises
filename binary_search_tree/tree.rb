@@ -35,24 +35,40 @@ class Tree
     end
     result << node
     queue.shift unless result.length == 1
-    print_all(current = queue[0], queue, result)
+    print_all(queue[0], queue, result)
   end
 
   def insert(value, node = @root)
-    puts "value is #{value} and node is #{node}"
+    # puts "value is #{value} and node is #{node}"
     return if node == value
 
     insert_left(value, node) if node.data > value
     insert_right(value, node) if node.data < value
   end
 
-  # def find(value)
-  #   # Use level_order method to find node
-  #   # Implicit return
-  #   level_order { |node| return node if node == value }
-  #   # Also added Enumerable for lawlz!
-  #   # @root.each {|node| return node if node == value}
-  # end
+  def delete(value)
+    return nil if find(value).nil?
+
+    parent_node = find_parent(value)
+    puts "Parent of #{value} is #{parent_node}"
+    if find(value).left.nil? && find(value).right.nil?
+      delete_leaf_node(parent_node, value)
+    elsif find(value).left.nil? || find(value).right.nil?
+      puts 'This deleted node has left or right'
+    else
+      puts 'This deleted node both a left & right'
+    end
+    # if there two nodes
+    # Node to be deleted has two children: Find inorder successor of the node. Copy contents of the inorder successor to the node and delete the inorder successor. Note that inorder predecessor can also be used.
+    # if there is one node it becomes node at old level
+  end
+
+  def find(value, current = @root)
+    return nil if current.nil?
+    return current if current.data == value
+
+    current.data > value ? find(value, current.left) : find(value, current.right)
+  end
 
   private
 
@@ -71,5 +87,17 @@ class Tree
 
   def insert_right(value, node)
     node.right ? insert(value, node.right) : node.right = Node.new(value)
+  end
+
+  def find_parent(value, current = @root)
+    return nil if @root.data == value
+    return current if current.left.data == value || current.right.data == value
+
+    current.data > value ? find_parent(value, current.left) : find_parent(value, current.right)
+  end
+
+  def delete_leaf_node(parent, value)
+    puts "Delete Leaf Node Parent: #{parent}"
+    parent.data > value ? parent.left = nil : parent.right = nil
   end
 end
