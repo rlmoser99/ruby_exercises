@@ -15,7 +15,6 @@ class LinkedList
     @head.nil? ? @head = node : @tail.next_node = node
     @tail = node
     @size += 1
-    # puts "#{node.value} was appended. (head: #{head.value} tail: #{tail.value})"
   end
 
   def prepend(node)
@@ -23,17 +22,41 @@ class LinkedList
     node.next_node = @head
     @head = node
     @size += 1
-    puts "#{node.value} was prepended. (head: #{head.value} tail: #{tail.value})"
   end
 
   def at(index)
-    return 'Invalid index' if index.is_a?(String) || index > size - 1
+    return 'Invalid index' if index.is_a?(String)
+    return 'nil' if index > size - 1
 
     node = head
     index.times do
       node = node.next_node
     end
-    node.value
+    node
+  end
+
+  def pop
+    return 'nil' if @size.zero?
+
+    @tail = size > 1 ? at(size - 2) : @head
+    @tail.next_node = nil
+    @size -= 1
+  end
+
+  def contains?(value, index = 0)
+    return false if index >= size
+
+    return true if at(index).value == value
+
+    contains?(value, index + 1)
+  end
+
+  def find(value, index = 0)
+    return 'nil' if index >= size
+
+    return index if at(index).value == value
+
+    find(value, index + 1)
   end
 
   def to_s
@@ -55,22 +78,24 @@ names.append('abby')
 names.append('becky')
 names.append('carl')
 names.append('denise')
-puts "The first node is #{names.head}"
-puts "The last node is #{names.tail}"
+puts "The first node is #{names.head.value}"
+puts "The last node is #{names.tail.value}"
 puts names.to_s
 names.prepend('ethan')
 puts names.to_s
 puts "Number of nodes #{names.size}"
+puts names.at(2)
 puts names.at(5)
 puts names.at('ethan')
-
-# pop removes the last element from the list
-
-# contains?(value) returns true if the passed in value is in the list and otherwise returns false.
-
-# find(value) returns the index of the node containing value, or nil if not found.
-
-# to_s represent your LinkedList objects as strings, so you can print them out and preview them in the console. The format should be: ( value ) -> ( value ) -> ( value ) -> nil
+names.pop
+puts names.to_s
+puts "The first node is #{names.head.value}"
+puts "The last node is #{names.tail.value}"
+puts "Number of nodes #{names.size}"
+puts names.contains?('carl')
+puts names.contains?('sara')
+puts names.find('carl')
+puts names.find('sara')
 
 # Extra Credit
 
