@@ -2,6 +2,7 @@
 
 require_relative 'node'
 
+# LinkedList is a linear collection of data elements called nodes
 class LinkedList
   attr_accessor :name, :head, :tail, :size
   def initialize
@@ -72,9 +73,9 @@ class LinkedList
   end
 
   def insert_at(value, index)
-    return 'nil' if index < 0 || index > size
+    return 'nil' if index.negative? || index > size
 
-    if index == 0
+    if index.zero?
       prepend(value)
     else
       node = Node.new(value, at(index))
@@ -86,7 +87,7 @@ class LinkedList
   def remove_at(index)
     return nil unless index.between?(0, size - 1)
 
-    if index == 0
+    if index.zero?
       @head = head.next_node
       @size -= 1
     elsif index == size - 1
