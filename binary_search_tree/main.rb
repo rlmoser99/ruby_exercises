@@ -22,8 +22,10 @@ puts 'Find a number:'
 puts tree.find(20)
 puts 'Find a number that does not exist:'
 puts tree.find(30).nil?
-puts 'Delete 59:'
-tree.delete(59)
+# puts 'Delete 59:'
+# tree.delete(59)
+puts 'Delete 66:'
+tree.delete(66)
 # puts 'Delete 16:'
 # tree.delete(16)
 # puts 'Delete 17:'

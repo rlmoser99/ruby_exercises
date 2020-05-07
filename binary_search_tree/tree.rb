@@ -54,13 +54,10 @@ class Tree
     if find(value).left.nil? && find(value).right.nil?
       delete_leaf_node(parent_node, value)
     elsif find(value).left.nil? || find(value).right.nil?
-      puts 'This deleted node has left or right'
+      delete_single_child_node(parent_node, value)
     else
-      puts 'This deleted node both a left & right'
+      puts 'This node to be deleted has left AND right'
     end
-    # if there two nodes
-    # Node to be deleted has two children: Find inorder successor of the node. Copy contents of the inorder successor to the node and delete the inorder successor. Note that inorder predecessor can also be used.
-    # if there is one node it becomes node at old level
   end
 
   def find(value, current = @root)
@@ -97,7 +94,13 @@ class Tree
   end
 
   def delete_leaf_node(parent, value)
-    puts "Delete Leaf Node Parent: #{parent}"
     parent.data > value ? parent.left = nil : parent.right = nil
+  end
+
+  def delete_single_child_node(parent, value)
+    grandchild = find(value).right if find(value).left.nil?
+    grandchild = find(value).left if find(value).right.nil?
+    parent.right = grandchild if parent.right == find(value)
+    parent.left = grandchild if parent.left == find(value)
   end
 end
