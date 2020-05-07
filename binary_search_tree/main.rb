@@ -22,10 +22,10 @@ puts 'Find a number:'
 puts tree.find(20)
 puts 'Find a number that does not exist:'
 puts tree.find(30).nil?
-# puts 'Delete 59:'
-# tree.delete(59)
-puts 'Delete 66:'
-tree.delete(66)
+puts 'Delete 63:'
+tree.delete(63)
+# puts 'Delete 66:'
+# tree.delete(66)
 # puts 'Delete 16:'
 # tree.delete(16)
 # puts 'Delete 17:'
@@ -43,10 +43,6 @@ tree_print.each { |node| puts node.to_s }
 # 8. Print out all elements in level, pre, post, and in order
 
 # As a bonus in Node class, try including the Comparable module and make nodes compare using their data attribute.
-
-# Write an #insert and #delete method which accepts a value to insert/delete (you’ll have to deal with several cases for delete such as when a node has children or not).
-
-# Write a #find method which accepts a value and returns the node with the given value.
 
 # Write a #level_order method which accepts a block. The method should traverse the tree in breadth-first level order and yield each node to the provided block. This method can be implemented using either iteration or recursion (try implementing both!). As a bonus, make the method return an array of values if no block is given. Tip: You will want to use an array acting as a queue to keep track of all the child nodes that you have yet to traverse and to add new ones to the list (as you saw in the video).
 

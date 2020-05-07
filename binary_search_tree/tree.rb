@@ -50,13 +50,12 @@ class Tree
     return nil if find(value).nil?
 
     parent_node = find_parent(value)
-    puts "Parent of #{value} is #{parent_node}"
     if find(value).left.nil? && find(value).right.nil?
       delete_leaf_node(parent_node, value)
     elsif find(value).left.nil? || find(value).right.nil?
       delete_single_child_node(parent_node, value)
     else
-      puts 'This node to be deleted has left AND right'
+      delete_double_child_node(parent_node, value)
     end
   end
 
@@ -100,7 +99,33 @@ class Tree
   def delete_single_child_node(parent, value)
     grandchild = find(value).right if find(value).left.nil?
     grandchild = find(value).left if find(value).right.nil?
-    parent.right = grandchild if parent.right == find(value)
-    parent.left = grandchild if parent.left == find(value)
+    attach_right(parent, grandchild) if parent.right == find(value)
+    attach_left(parent, grandchild) if parent.left == find(value)
+  end
+
+  def delete_double_child_node(parent, value)
+    replace = find_inorder_successor(value)
+    delete(replace.data)
+    attach_right(replace, find(value).right)
+    attach_left(replace, find(value).left)
+    attach_right(parent, replace) if parent.right == find(value)
+    attach_left(parent, replace)  if parent.left == find(value)
+  end
+
+  def attach_right(parent, node)
+    puts "parent is #{parent} and node is #{node}"
+    parent.right = node
+  end
+
+  def attach_left(parent, node)
+    puts "parent is #{parent} and node is #{node}"
+    parent.left = node
+  end
+
+  def find_inorder_successor(value, successor = value)
+    result = find(successor + 1)
+    return result unless result.nil?
+
+    find_inorder_successor(successor + 1)
   end
 end
