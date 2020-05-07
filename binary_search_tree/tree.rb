@@ -38,6 +38,34 @@ class Tree
     print_all(queue[0], queue, result)
   end
 
+  # def level_order
+  #   queue = [@root]
+  #   result = []
+  #   until queue.empty?
+  #     node = queue.shift
+  #     result << node.data
+  #     queue << node.left unless node.left.nil?
+  #     queue << node.right unless node.right.nil?
+  #   end
+  #   result
+  # end
+
+  def level_order
+    queue = [@root]
+    result = []
+    until queue.empty?
+      node = queue.shift
+      block_given? ? yield(node) : result << node.data
+      queue << node.left unless node.left.nil?
+      queue << node.right unless node.right.nil?
+    end
+    result unless block_given?
+  end
+
+  def find_node(value)
+    level_order { |node| return node if node.data == value }
+  end
+
   def insert(value, node = @root)
     # puts "value is #{value} and node is #{node}"
     return if node == value

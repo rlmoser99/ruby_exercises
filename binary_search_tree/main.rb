@@ -22,14 +22,16 @@ puts 'Find a number:'
 puts tree.find(20)
 puts 'Find a number that does not exist:'
 puts tree.find(30).nil?
-puts 'Delete 63:'
-tree.delete(63)
+# puts 'Delete 63:'
+# tree.delete(63)
 # puts 'Delete 66:'
 # tree.delete(66)
 # puts 'Delete 16:'
 # tree.delete(16)
 # puts 'Delete 17:'
 # tree.delete(17)
+p tree.level_order
+puts tree.find_node(20)
 puts '-----------------------------'
 puts 'Print each node. List their left & right nodes, unless nil'
 tree_print = tree.print_all
@@ -44,7 +46,11 @@ tree_print.each { |node| puts node.to_s }
 
 # As a bonus in Node class, try including the Comparable module and make nodes compare using their data attribute.
 
-# Write a #level_order method which accepts a block. The method should traverse the tree in breadth-first level order and yield each node to the provided block. This method can be implemented using either iteration or recursion (try implementing both!). As a bonus, make the method return an array of values if no block is given. Tip: You will want to use an array acting as a queue to keep track of all the child nodes that you have yet to traverse and to add new ones to the list (as you saw in the video).
+# Use level order to find parent and/or re-balance the tree
+# parent = nil
+# level_order { |n| parent = n if n.left == node || n.right == node }
+# rebalance!
+# build_tree(level_order)
 
 # Write #inorder, #preorder, and #postorder methods which accept a block. Each method should traverse the tree in their respective depth-first order and yield each node to the provided block. As a bonus, make the method return an array of values if no block is given.
 
