@@ -55,31 +55,45 @@ class Tree
     result unless block_given?
   end
 
-  def inorder(root = @root, result = [])
-    return result unless root
+  # def inorder(root = @root, result = [])
+  #   return result unless root
 
-    inorder(root.left, result) if root.left
-    result.push(root.data)
-    inorder(root.right, result) if root.right
-    result
-  end
+  #   inorder(root.left, result) if root.left
+  #   result.push(root.data)
+  #   inorder(root.right, result) if root.right
+  #   result
+  # end
 
-  def preorder(root = @root, result = [])
-    return result unless root
+  # def preorder(root = @root, result = [])
+  #   return result unless root
 
-    result.push(root.data)
-    preorder(root.left, result) if root.left
-    preorder(root.right, result) if root.right
-    result
-  end
+  #   result.push(root.data)
+  #   preorder(root.left, result) if root.left
+  #   preorder(root.right, result) if root.right
+  #   result
+  # end
 
-  def postorder(root = @root, result = [])
-    return result unless root
+  # def postorder(root = @root, result = [])
+  #   return result unless root
 
-    postorder(root.left, result) if root.left
-    postorder(root.right, result) if root.right
-    result.push(root.data)
-    result
+  #   postorder(root.left, result) if root.left
+  #   postorder(root.right, result) if root.right
+  #   result.push(root.data)
+  #   result
+  # end
+
+  ORDERS = %w[preorder inorder postorder].freeze
+  ORDERS.each do |method|
+    define_method method.to_s do |root = @root, result = []|
+      return result if root.nil?
+
+      result << root.data if method == 'preorder'
+      send(method, root.left, result)
+      result << root.data if method == 'inorder'
+      send(method, root.right, result)
+      result << root.data if method == 'postorder'
+      result
+    end
   end
 
   def find_node(value)
