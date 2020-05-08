@@ -2,23 +2,28 @@
 
 class Tree
   def initialize(array)
-    result = array.sort.uniq
-    @root = build_tree(result)
+    @root = build_tree(array)
   end
 
   def build_tree(array)
     return if array.empty?
-    return Node.new(array[0]) if array.length <= 1
 
-    middle = array.length / 2
-    root = Node.new(array[middle])
-    root.left = build_tree(array[0...middle])
-    root.right = build_tree(array[middle + 1..-1])
+    result = array.sort.uniq
+    return Node.new(result[0]) if result.length <= 1
+
+    middle = result.length / 2
+    root = Node.new(result[middle])
+    root.left = build_tree(result[0...middle])
+    root.right = build_tree(result[middle + 1..-1])
     root
   end
 
   def balanced?
     (depth(@root.left) - depth(@root.right)).abs <= 1
+  end
+
+  def rebalance!
+    @root = build_tree(inorder)
   end
 
   def print_all(current = @root, queue = [], result = [])
@@ -38,18 +43,6 @@ class Tree
     print_all(queue[0], queue, result)
   end
 
-  # def level_order
-  #   queue = [@root]
-  #   result = []
-  #   until queue.empty?
-  #     node = queue.shift
-  #     result << node.data
-  #     queue << node.left unless node.left.nil?
-  #     queue << node.right unless node.right.nil?
-  #   end
-  #   result
-  # end
-
   def level_order
     queue = [@root]
     result = []
@@ -60,6 +53,33 @@ class Tree
       queue << node.right unless node.right.nil?
     end
     result unless block_given?
+  end
+
+  def inorder(root = @root, result = [])
+    return result unless root
+
+    inorder(root.left, result) if root.left
+    result.push(root.data)
+    inorder(root.right, result) if root.right
+    result
+  end
+
+  def preorder(root = @root, result = [])
+    return result unless root
+
+    result.push(root.data)
+    preorder(root.left, result) if root.left
+    preorder(root.right, result) if root.right
+    result
+  end
+
+  def postorder(root = @root, result = [])
+    return result unless root
+
+    postorder(root.left, result) if root.left
+    postorder(root.right, result) if root.right
+    result.push(root.data)
+    result
   end
 
   def find_node(value)

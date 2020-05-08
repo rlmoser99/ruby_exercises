@@ -14,14 +14,45 @@ puts ''
 puts '2. Confirm that the tree is balanced by calling `#balanced?`'
 puts tree.balanced?
 puts ''
-tree.insert(60)
-tree.insert(24)
-tree.insert(79)
-tree.insert(70)
-puts 'Find a number:'
-puts tree.find(20)
-puts 'Find a number that does not exist:'
-puts tree.find(30).nil?
+puts '3. Print out all elements in level, pre, post, and in order'
+puts 'Level Order:'
+p tree.level_order
+puts 'Pre Order:'
+p tree.preorder
+puts 'Post Order:'
+p tree.postorder
+puts 'In Order:'
+p tree.inorder
+puts ''
+puts '4. try to unbalance the tree by adding several numbers > 100'
+tree.insert(107)
+tree.insert(115)
+tree.insert(101)
+tree.insert(109)
+puts ''
+puts '5. Confirm that the tree is unbalanced by calling `#balanced?`'
+puts tree.balanced?
+puts ''
+puts '6. Balance the tree by calling `#rebalance!`'
+tree.rebalance!
+puts ''
+puts '7. Confirm that the tree is balanced by calling `#balanced?`'
+puts tree.balanced?
+puts ''
+puts '8. Print out all elements in level, pre, post, and in order'
+puts 'Level Order:'
+p tree.level_order
+puts 'Pre Order:'
+p tree.preorder
+puts 'Post Order:'
+p tree.postorder
+puts 'In Order:'
+p tree.inorder
+
+# puts 'Find a number:'
+# puts tree.find(20)
+# puts 'Find a number that does not exist:'
+# puts tree.find(30).nil?
 # puts 'Delete 63:'
 # tree.delete(63)
 # puts 'Delete 66:'
@@ -30,40 +61,11 @@ puts tree.find(30).nil?
 # tree.delete(16)
 # puts 'Delete 17:'
 # tree.delete(17)
-p tree.level_order
-puts tree.find_node(20)
-puts '-----------------------------'
-puts 'Print each node. List their left & right nodes, unless nil'
+# puts tree.find_node(20)
+puts '---------------------------------------'
+puts 'Node Visualization - data, left & right'
+puts '---------------------------------------'
 tree_print = tree.print_all
 tree_print.each { |node| puts node.to_s }
-
-# 3. Print out all elements in level, pre, post, and in order
-# 4. try to unbalance the tree by adding several numbers > 100
-# 5. Confirm that the tree is unbalanced by calling `#balanced?`
-# 6. Balance the tree by calling `#rebalance!`
-# 7. Confirm that the tree is balanced by calling `#balanced?`
-# 8. Print out all elements in level, pre, post, and in order
-
-# As a bonus in Node class, try including the Comparable module and make nodes compare using their data attribute.
-
-# Use level order to find parent and/or re-balance the tree
-# parent = nil
-# level_order { |n| parent = n if n.left == node || n.right == node }
-# rebalance!
-# build_tree(level_order)
-
-# Write #inorder, #preorder, and #postorder methods which accept a block. Each method should traverse the tree in their respective depth-first order and yield each node to the provided block. As a bonus, make the method return an array of values if no block is given.
-
-# Write a #rebalance! method which rebalances an unbalanced tree. Tip: You’ll want to create a level-order array of the tree before passing the array back into the #build_tree method.
-
-# Write a simple driver script that does the following:
-# 1. Create a binary search tree from an array of random numbers (`Array.new(15) { rand(1..100) }`)
-# 2. Confirm that the tree is balanced by calling `#balanced?`
-# 3. Print out all elements in level, pre, post, and in order
-# 4. try to unbalance the tree by adding several numbers > 100
-# 5. Confirm that the tree is unbalanced by calling `#balanced?`
-# 6. Balance the tree by calling `#rebalance!`
-# 7. Confirm that the tree is balanced by calling `#balanced?`
-# 8. Print out all elements in level, pre, post, and in order
 
 # Pat yourself on the back! As a super-duper bonus, notice how all the depth-first methods share a similar signature and are basically just a re-arrangement of the same 3 lines… try dynamically declaring the three methods using metaprogamming techniques like #define_method.
