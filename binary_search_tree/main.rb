@@ -49,19 +49,32 @@ p tree.postorder
 puts 'In Order:'
 p tree.inorder
 
-# puts 'Find a number:'
-# puts tree.find(20)
-# puts 'Find a number that does not exist:'
-# puts tree.find(30).nil?
-# puts 'Delete 63:'
-# tree.delete(63)
-# puts 'Delete 66:'
-# tree.delete(66)
-# puts 'Delete 16:'
-# tree.delete(16)
-# puts 'Delete 17:'
-# tree.delete(17)
-# puts tree.find_node(20)
+puts '---------------------------------------'
+puts 'Node Visualization - data, left & right'
+puts '---------------------------------------'
+tree.insert(79)
+tree.insert(60)
+tree.insert(70)
+tree_print = tree.print_all
+tree_print.each { |node| puts node.to_s }
+puts 'Find a number:'
+puts tree.find(20)
+puts 'Find a number that does not exist:'
+puts tree.find(30).nil?
+# puts ''
+puts 'Delete 63:'
+tree.delete(63)
+# puts ''
+puts 'Delete 61:'
+tree.delete(61)
+# puts ''
+puts 'Delete 16:'
+tree.delete(16)
+# puts ''
+puts 'Delete 17:'
+tree.delete(17)
+# puts ''
+puts tree.find_node(20)
 puts '---------------------------------------'
 puts 'Node Visualization - data, left & right'
 puts '---------------------------------------'
@@ -69,3 +82,5 @@ tree_print = tree.print_all
 tree_print.each { |node| puts node.to_s }
 
 # Pat yourself on the back! As a super-duper bonus, notice how all the depth-first methods share a similar signature and are basically just a re-arrangement of the same 3 lines… try dynamically declaring the three methods using metaprogamming techniques like #define_method.
+
+# Remove one of the find methods - find_node or find

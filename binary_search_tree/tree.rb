@@ -87,11 +87,10 @@ class Tree
   end
 
   def insert(value, node = @root)
-    # puts "value is #{value} and node is #{node}"
     return if node == value
 
-    insert_left(value, node) if node.data > value
-    insert_right(value, node) if node.data < value
+    insert_left(value, node) if node > value
+    insert_right(value, node) if node < value
   end
 
   def delete(value)
@@ -109,9 +108,9 @@ class Tree
 
   def find(value, current = @root)
     return nil if current.nil?
-    return current if current.data == value
+    return current if current == value
 
-    current.data > value ? find(value, current.left) : find(value, current.right)
+    current > value ? find(value, current.left) : find(value, current.right)
   end
 
   private
@@ -134,14 +133,14 @@ class Tree
   end
 
   def find_parent(value, current = @root)
-    return nil if @root.data == value
-    return current if current.left.data == value || current.right.data == value
+    return nil if @root == value
+    return current if current.left == value || current.right == value
 
-    current.data > value ? find_parent(value, current.left) : find_parent(value, current.right)
+    current > value ? find_parent(value, current.left) : find_parent(value, current.right)
   end
 
   def delete_leaf_node(parent, value)
-    parent.data > value ? parent.left = nil : parent.right = nil
+    parent > value ? parent.left = nil : parent.right = nil
   end
 
   def delete_single_child_node(parent, value)
@@ -161,12 +160,10 @@ class Tree
   end
 
   def attach_right(parent, node)
-    puts "parent is #{parent} and node is #{node}"
     parent.right = node
   end
 
   def attach_left(parent, node)
-    puts "parent is #{parent} and node is #{node}"
     parent.left = node
   end
 
