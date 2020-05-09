@@ -26,7 +26,7 @@ class Tree
     @root = build_tree(inorder)
   end
 
-  def print_all(current = @root, queue = [], result = [])
+  def node_list(current = @root, queue = [], result = [])
     return result if current.nil?
 
     node = [current.data]
@@ -40,7 +40,7 @@ class Tree
     end
     result << node
     queue.shift unless result.length == 1
-    print_all(queue[0], queue, result)
+    node_list(queue[0], queue, result)
   end
 
   def level_order
@@ -55,49 +55,30 @@ class Tree
     result unless block_given?
   end
 
-  # def inorder(root = @root, result = [])
-  #   return result unless root
-
-  #   inorder(root.left, result) if root.left
-  #   result.push(root.data)
-  #   inorder(root.right, result) if root.right
-  #   result
-  # end
-
-  # def preorder(root = @root, result = [])
-  #   return result unless root
-
-  #   result.push(root.data)
-  #   preorder(root.left, result) if root.left
-  #   preorder(root.right, result) if root.right
-  #   result
-  # end
-
-  # def postorder(root = @root, result = [])
-  #   return result unless root
-
-  #   postorder(root.left, result) if root.left
-  #   postorder(root.right, result) if root.right
-  #   result.push(root.data)
-  #   result
-  # end
-
   ORDERS = %w[preorder inorder postorder].freeze
   ORDERS.each do |method|
-    define_method method.to_s do |root = @root, result = []|
-      return result if root.nil?
+    define_method method.to_s do |root = @root, result = [], &block|
+      return if root.nil?
 
-      result << root.data if method == 'preorder'
-      send(method, root.left, result)
-      result << root.data if method == 'inorder'
-      send(method, root.right, result)
-      result << root.data if method == 'postorder'
-      result
+      traverse(root, result, &block) if method == 'preorder'
+      send(method, root.left, result, &block)
+      traverse(root, result, &block) if method == 'inorder'
+      send(method, root.right, result, &block)
+      traverse(root, result, &block) if method == 'postorder'
+
+      result unless block
     end
   end
 
-  def find_node(value)
-    level_order { |node| return node if node.data == value }
+  def traverse(root, result, &block)
+    block ? block.call(root.data) : result << root.data
+  end
+
+  def find_value(value)
+    inorder { |node| return node if node == value }
+    # preorder { |node| return node if node == value }
+    # postorder { |node| return node if node == value }
+    # level_order { |node| return node if node.data == value }
   end
 
   def insert(value, node = @root)
