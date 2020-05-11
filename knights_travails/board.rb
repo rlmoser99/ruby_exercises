@@ -17,36 +17,47 @@ class Board
     puts "There are #{locations.size} locations"
   end
 
-  def create_children(current = @alpha)
-    # puts "current's children are #{current.children}"
-    # puts "current's children will be #{current.moves}"
-    # puts '----------------------------------------------'
+  def create_children(queue = [@alpha], destination)
+    current = queue[0]
     current.moves.each do |move|
       puts "move is #{move}"
-      current.children << Knight.new(move)
+      if find_child(move).nil?
+        new_child = Knight.new(move)
+        current.children << new_child
+        queue << new_child
+      else
+        current.children << find_child(move)
+      end
     end
-    # puts '----------------------------------------------'
-    # puts "current's children now are #{current.children}"
+    puts "current.location is #{current.location} and destination is #{destination}"
+    return if find_child(destination)
+
+    queue.shift
+    create_children(queue, destination)
   end
 
-  def find_child(coordinates, start = @alpha)
-    puts "coordinates is #{coordinates}"
-    puts "start is #{start}"
+  def find_child(coordinates, queue = [@alpha])
+    return nil if queue.empty?
+
     found = nil
-    # puts "start children are #{start.children}"
-    start.children.each do |child|
-      puts "child is #{child}"
-      puts "child.location is #{child.location}"
+    current = queue[0]
+    current.children.each do |child|
+      queue << child
       found = child if child.location == coordinates
     end
-    puts "found is #{found}"
+    queue.shift
+    return found unless found.nil?
+
+    find_child(coordinates, queue)
   end
 
   def knight_moves(start, destination)
     puts "start is #{start} & destination is #{destination}"
     @alpha = Knight.new(start)
     puts "@alpha is #{@alpha}"
-    create_children
-    find_child([1, 4])
+    create_children(destination)
+    test = find_child([1, 4])
+    # test = find_child([7, 7])
+    puts "test is #{test}" unless test.nil?
   end
 end
