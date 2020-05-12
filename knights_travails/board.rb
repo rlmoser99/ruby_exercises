@@ -2,62 +2,71 @@
 
 # Chess board game
 class Board
-  attr_accessor :locations
+  def create_children(parent)
+    # puts 'CREATE_CHILDREN'
+    # puts "parent is #{parent} at #{parent.location}"
+    parent.moves.each do |move|
+      # puts "parent.move is #{move}"
+      child = find_child(move).nil? ? Knight.new(move) : find_child(move)
+      parent.children << child
+    end
+  end
 
-  def initialize
-    @locations = board_locations
+  def create_family_tree(destination, queue = [@alpha], index = 0)
+    # puts "CREATE_FAMILY_TREE destination: #{destination}"
+    current = queue[index]
+    # puts "current is #{current} at #{current.location}"
+    create_children(current)
+    current.children.each do |child|
+      next if queue.include?(child)
+
+      # puts "queue did not include child at #{child.location}"
+      queue << child
+    end
+
+    return if current == find_child(destination)
+    return if index >= 66
+
+    index += 1
+    create_family_tree(destination, queue, index)
+  end
+
+  def find_child(coordinates, queue = [@alpha], index = 0)
+    found_knight = nil
+    current = queue[index]
+    return if current.nil?
+
+    current.children.each do |child|
+      queue << child unless queue.include?(child)
+      found_knight = child if child.location == coordinates
+    end
+    index += 1
+    return found_knight unless found_knight.nil?
+
+    find_child(coordinates, queue, index)
+  end
+
+  def knight_moves(start, destination)
+    # puts "start is #{start} & destination is #{destination}"
+    @alpha = Knight.new(start)
+    create_family_tree(destination)
+    # knight_list
+  end
+
+  private
+
+  def knight_list
+    puts 'LIST OF ALL THE KNIGHTS:'
+    knight_summary = board_locations
+    knight_summary.each do |knight|
+      current = find_child(knight)
+      puts "Location: #{knight}"
+      puts "Current #{current} at #{current.location}" unless current.nil?
+      puts ''
+    end
   end
 
   def board_locations
     [0, 1, 2, 3, 4, 5, 6, 7].repeated_permutation(2).to_a
-  end
-
-  def board_summary
-    puts "locations is #{locations}"
-    puts "There are #{locations.size} locations"
-  end
-
-  def create_children(queue = [@alpha], destination)
-    current = queue[0]
-    current.moves.each do |move|
-      puts "move is #{move}"
-      if find_child(move).nil?
-        new_child = Knight.new(move)
-        current.children << new_child
-        queue << new_child
-      else
-        current.children << find_child(move)
-      end
-    end
-    puts "current.location is #{current.location} and destination is #{destination}"
-    return if find_child(destination)
-
-    queue.shift
-    create_children(queue, destination)
-  end
-
-  def find_child(coordinates, queue = [@alpha])
-    return nil if queue.empty?
-
-    found = nil
-    current = queue[0]
-    current.children.each do |child|
-      queue << child
-      found = child if child.location == coordinates
-    end
-    queue.shift
-    return found unless found.nil?
-
-    find_child(coordinates, queue)
-  end
-
-  def knight_moves(start, destination)
-    puts "start is #{start} & destination is #{destination}"
-    @alpha = Knight.new(start)
-    puts "@alpha is #{@alpha}"
-    create_children(destination)
-    test = find_child([1, 4])
-    # test = find_child([7, 7])
-    puts "test is #{test}" unless test.nil?
   end
 end

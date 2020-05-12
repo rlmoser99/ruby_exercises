@@ -4,5 +4,6 @@ require_relative 'board.rb'
 require_relative 'knight.rb'
 
 game = Board.new
-# game.board_summary
 game.knight_moves([3, 3], [0, 0])
+# game.knight_moves([6, 3], [0, 0])
+# game.knight_moves([0, 0], [7, 7])
