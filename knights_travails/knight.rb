@@ -8,7 +8,7 @@ class Knight
     @location = location
     @moves = possible_moves(location)
     @children = []
-    puts "\e[31mKNIGHT:#{location} => #{moves}\e[0m"
+    # puts "KNIGHT:#{location} => #{moves}"
   end
 
   def possible_moves(location, result = [])

@@ -3,24 +3,18 @@
 # Chess board game
 class Board
   def create_children(parent)
-    # puts 'CREATE_CHILDREN'
-    # puts "parent is #{parent} at #{parent.location}"
     parent.moves.each do |move|
-      # puts "parent.move is #{move}"
       child = find_child(move).nil? ? Knight.new(move) : find_child(move)
       parent.children << child
     end
   end
 
   def create_family_tree(destination, queue = [@alpha], index = 0)
-    # puts "CREATE_FAMILY_TREE destination: #{destination}"
     current = queue[index]
-    # puts "current is #{current} at #{current.location}"
     create_children(current)
     current.children.each do |child|
       next if queue.include?(child)
 
-      # puts "queue did not include child at #{child.location}"
       queue << child
     end
 
@@ -46,11 +40,33 @@ class Board
     find_child(coordinates, queue, index)
   end
 
+  def find_path(destination, path = [destination])
+    parent = find_parent(destination)
+    path << parent.location
+    return path if parent == @alpha
+
+    find_path(parent.location, path)
+  end
+
+  def find_parent(destination, queue = [@alpha], index = 0)
+    current = queue[index]
+    parent = current.moves.any? { |move| move == destination }
+    return if current.nil?
+    return current if parent == true
+
+    current.children.each do |child|
+      queue << child unless queue.include?(child)
+    end
+    index += 1
+    find_parent(destination, queue, index)
+  end
+
   def knight_moves(start, destination)
-    # puts "start is #{start} & destination is #{destination}"
     @alpha = Knight.new(start)
     create_family_tree(destination)
-    # knight_list
+    path = find_path(destination)
+    puts "You made it in #{path.size - 1} moves!  Here's your path:"
+    path.each_with_index { |move, index| puts "#{index}: #{move}" }
   end
 
   private
