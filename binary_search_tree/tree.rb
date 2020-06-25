@@ -18,6 +18,7 @@ class Tree
     root
   end
 
+  # THIS IS NOT CORRECT - For it to be balanced, the left and right subtrees of every node must differ in height by no more than 1.
   def balanced?
     (depth(@root.left) - depth(@root.right)).abs <= 1
   end
