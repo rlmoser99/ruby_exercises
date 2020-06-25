@@ -15,8 +15,8 @@ puts fibs(11).join(' ')
 
 # Now write another method, to solves the same problem as above recursively.
 def fibs_rec(number)
-  return result = [0] if number == 1
-  return result = [0, 1] if number == 2
+  return [0] if number == 1
+  return [0, 1] if number == 2
 
   result = fibs_rec(number - 1)
   result << result[-1] + result[-2]
