@@ -23,7 +23,7 @@ puts two_sum([1234, 5678, 9012], 14690).sort == [1, 2]
 puts two_sum([2, 2, 3], 4).sort == [0, 1]
 ```
 
-# Favorite Submitted Solutions
+## Favorite Submitted Solutions
 
 ```rb
 def two_sum(numbers, target)
