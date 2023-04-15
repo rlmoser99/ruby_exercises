@@ -12,6 +12,9 @@ Your function will return the index 3, because at the 3rd position of the array,
 ```rb
 def find_even_index(array)
   array.each_with_index do |number, index|
+    # After installing rubocop, I learned something cool.
+    # For the second half of the array, you don't need -1 for the range
+    # return index if array[0...index].sum == array[index + 1..].sum
     return index if array[0...index].sum == array[index + 1..-1].sum
 
     return -1 if index == array.size - 1

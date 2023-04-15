@@ -1,9 +1,8 @@
 def find_even_index(array)
-  array.each_with_index do |number, index|
-    return index if array[0...index].sum == array[index + 1..-1].sum
-
-    return -1 if index == array.size - 1
+  array.each_index do |index|
+    return index if array[0...index].sum == array[index + 1..].sum
   end
+  -1
 end
 
 puts find_even_index([1,2,3,4,3,2,1]) == 3
